@@ -3,6 +3,7 @@
 // @namespace   https://github.com/amcginn
 // @match       https://www.instagram.com/
 // @grant       none
+// @license     CC-BY-4.0
 // @version     1.0.1
 // @author      amcginn
 // @description remove sponsored post content from instagram.com
