@@ -5,7 +5,7 @@
 // @grant       none
 // @version     1.0
 // @author      amcginn
-// @description remove sponsored post content
+// @description remove sponsored post content from instagram.com
 // ==/UserScript==
 
 function removeSponsored() {
