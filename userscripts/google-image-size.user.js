@@ -5,6 +5,7 @@
 // @grant       none
 // @version     1.0
 // @author      amcginn
+// @license     MIT
 // @description Add image sizes to Google Image search results.
 // ==/UserScript==
 
