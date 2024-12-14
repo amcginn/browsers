@@ -12,10 +12,12 @@
 
 // Configuration
 const config = {
-    top: '24px',
-    left: '40%',
-    bgColor: 'teal',
-    borderColor: 'lightblue'
+    top: '16px',
+    left: '30%',
+    width: '32px',
+    height: '24px',
+    bgColor: 'lightskyblue',
+    borderColor: 'deepskyblue'
 };
 
 // Base selectors
@@ -40,8 +42,8 @@ Object.assign(toggleButton.style, {
     position: 'fixed',
     top: config.top,
     left: config.left,
-    width: '32px',
-    height: '18px',
+    width: config.width,
+    height: config.height,
     backgroundColor: config.bgColor,
     border: `solid ${config.borderColor} 1px`,
     borderRadius: '4px',
