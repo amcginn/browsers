@@ -3,12 +3,15 @@
 // @namespace   https://github.com/amcginn/
 // @match       https://www.google.com/search*
 // @grant       none
-// @version     1.1.0
+// @version     1.2.0
 // @author      amcginn
 // @license     MIT
 // @description Add image sizes to Google Image search results.
+// @changelog   1.2.0 - Refactor from Google changes: pull from window js objects
 // @changelog   1.1.0 - Use MutationObserver, debouncing, skip Google's own dimensions, improved positioning
 // @changelog   1.0 - Initial release
+// @downloadURL https://update.greasyfork.org/scripts/497480/Show%20Google%20Image%20Size.user.js
+// @updateURL https://update.greasyfork.org/scripts/497480/Show%20Google%20Image%20Size.meta.js
 // ==/UserScript==
 
 function createSizeEl(width, height) {
@@ -19,16 +22,19 @@ function createSizeEl(width, height) {
 }
 
 function showImgSizes() {
-  let searchImageResults = document.querySelectorAll('h3:has(> a[href] img):not(.image-size)');
+  let searchImageResults = document.querySelectorAll('h3:has(> a img):not(.image-size)');
 
   for (const result of searchImageResults) {
     try {
-      let link = result.firstChild;
-      if (!link?.href || link.querySelector('p')) continue;
-      
-      let linkParams = new URL(link.href, globalThis.location.origin).searchParams;
-      let width = linkParams.get('w');
-      let height = linkParams.get('h');
+      let container = result.closest('[data-ved]')
+      let imgId = container.getAttribute('jsdata').split(';').pop()
+      let arr = window.W_jd[imgId];
+      let syms = Object.getOwnPropertySymbols(arr);
+      let realArr = arr[syms[0]].Ar
+
+      let fullImg = realArr[1].Ar[3]
+      let height = fullImg[1]
+      let width = fullImg[2]
 
       if (!width || !height) continue;
 
@@ -51,6 +57,8 @@ function debouncedShowImgSizes() {
 }
 
 window.addEventListener('load', () => {
+  if (!window.W_jd) return;
+
   try {
     const observer = new MutationObserver(debouncedShowImgSizes);
     observer.observe(document.body, { childList: true, subtree: true });
